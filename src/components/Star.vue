@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref,defineProps, type HTMLAttributes } from 'vue';
 const getWidth = ()=>{
-    return Math.random() * 8 + "px"
+    return Math.random() * 4 + "px"
 }
 const getPosition = ()=>{
     return Math.random() * 100 + "%"
