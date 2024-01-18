@@ -1,0 +1,56 @@
+{
+  "repository": {
+    "name": "binhrepo",
+    "folders": [
+      {
+        "name_folder": "Binh1",
+        "id": "1",
+        "child_folder": [
+            { "name_folder": "Binh11", "id": "11", "child_folder": [] },
+            { "name_folder": "Binh12", "id": "12", "child_folder": [
+                {"name_folder": "Binh121", "id": "121", "child_folder": [
+                    {
+                        "name_folder": "Binh1211", "id": "1211", "child_folder": []
+                    },
+                    {"name_folder": "Binh1212", "id": "1212", "child_folder": [
+                        {
+                            "name_folder": "Binh1",
+                            "id": "1",
+                            "child_folder": [
+                                { "name_folder": "Binh11", "id": "11", "child_folder": [] },
+                                { "name_folder": "Binh12", "id": "12", "child_folder": [
+                                    {"name_folder": "Binh121", "id": "121", "child_folder": [
+                                        {
+                                            "name_folder": "Binh1211", "id": "1211", "child_folder": []
+                                        },
+                                        {"name_folder": "Binh1212", "id": "1212", "child_folder": []}
+                                    ]}
+                                ] },
+                                { "name_folder": "Binh13", "id": "13", "child_folder": [] }
+                            ]
+                          }
+                    ]}
+                ]}
+            ] },
+            { "name_folder": "Binh13", "id": "13", "child_folder": [] }
+        ]
+      },
+      {
+        "name_folder": "Binh2",
+        "id": "1",
+        "child_folder": [
+            { "name_folder": "Binh21", "id": "11", "child_folder": [] },
+            { "name_folder": "Binh22", "id": "12", "child_folder": [
+                {"name_folder": "Binh221", "id": "121", "child_folder": [
+                    {
+                        "name_folder": "Binh2211", "id": "1211", "child_folder": []
+                    },
+                    {"name_folder": "Binh2212", "id": "1212", "child_folder": []}
+                ]}
+            ] },
+            { "name_folder": "Binh23", "id": "13", "child_folder": [] }
+        ]
+      }
+    ]
+  }
+}
