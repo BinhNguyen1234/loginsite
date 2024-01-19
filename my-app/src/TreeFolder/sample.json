@@ -1,56 +1,102 @@
 {
-  "repository": {
-    "name": "binhrepo",
-    "folders": [
+
+  "folders": [
       {
-        "name_folder": "Binh1",
-        "id": "1",
-        "child_folder": [
-            { "name_folder": "Binh11", "id": "11", "child_folder": [] },
-            { "name_folder": "Binh12", "id": "12", "child_folder": [
-                {"name_folder": "Binh121", "id": "121", "child_folder": [
-                    {
-                        "name_folder": "Binh1211", "id": "1211", "child_folder": []
-                    },
-                    {"name_folder": "Binh1212", "id": "1212", "child_folder": [
-                        {
-                            "name_folder": "Binh1",
-                            "id": "1",
-                            "child_folder": [
-                                { "name_folder": "Binh11", "id": "11", "child_folder": [] },
-                                { "name_folder": "Binh12", "id": "12", "child_folder": [
-                                    {"name_folder": "Binh121", "id": "121", "child_folder": [
-                                        {
-                                            "name_folder": "Binh1211", "id": "1211", "child_folder": []
-                                        },
-                                        {"name_folder": "Binh1212", "id": "1212", "child_folder": []}
-                                    ]}
-                                ] },
-                                { "name_folder": "Binh13", "id": "13", "child_folder": [] }
+        "name": "2",
+        "id": "2",
+        "folders": [
+          { "name": "33", "id": "33", "folders": [] },
+          {
+            "name": "44",
+            "id": "44",
+            "folders": [
+              {
+                "name": "55",
+                "id": "55",
+                "folders": [
+                  {
+                    "name": "66",
+                    "id": "66",
+                    "folders": []
+                  },
+                  {
+                    "name": "77",
+                    "id": "77",
+                    "folders": [
+                      {
+                        "name": "88",
+                        "id": "88",
+                        "folders": [
+                          {
+                            "name": "99",
+                            "id": "99",
+                            "folders": []
+                          },
+                          {
+                            "name": "rr",
+                            "id": "rr",
+                            "folders": [
+                              {
+                                "name": "ee",
+                                "id": "ee",
+                                "folders": [
+                                  {
+                                    "name": "qqq",
+                                    "id": "qqq",
+                                    "folders": []
+                                  },
+                                  {
+                                    "name": "ggg",
+                                    "id": "ggg",
+                                    "folders": []
+                                  }
+                                ]
+                              }
                             ]
+                          },
+                          {
+                            "name": "uu",
+                            "id": "uu",
+                            "folders": []
                           }
-                    ]}
-                ]}
-            ] },
-            { "name_folder": "Binh13", "id": "13", "child_folder": [] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          { "name": "zz", "id": "zz", "folders": [] }
         ]
       },
       {
-        "name_folder": "Binh2",
-        "id": "1",
-        "child_folder": [
-            { "name_folder": "Binh21", "id": "11", "child_folder": [] },
-            { "name_folder": "Binh22", "id": "12", "child_folder": [
-                {"name_folder": "Binh221", "id": "121", "child_folder": [
-                    {
-                        "name_folder": "Binh2211", "id": "1211", "child_folder": []
-                    },
-                    {"name_folder": "Binh2212", "id": "1212", "child_folder": []}
-                ]}
-            ] },
-            { "name_folder": "Binh23", "id": "13", "child_folder": [] }
+        "name": "aasdas",
+        "id": "aasdas",
+        "folders": [
+          { "name": "asdqwe", "id": "asdqwe", "folders": [] },
+          {
+            "name": "yyyr",
+            "id": "yyyr",
+            "folders": [
+              {
+                "name": "mnm",
+                "id": "mnm",
+                "folders": [
+                  {
+                    "name": "llll",
+                    "id": "llll",
+                    "folders": []
+                  },
+                  { "name": "pppp", "id": "pppp", "folders": [] }
+                ]
+              }
+            ]
+          },
+          { "name": "yyyer", "id": "yyyer", "folders": [] }
         ]
       }
-    ]
-  }
+  ],
+
+  "path": ["a", "b", "c", "d"]
 }

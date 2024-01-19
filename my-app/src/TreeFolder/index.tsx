@@ -1,42 +1,35 @@
 'use client'
 interface IData {
-    repository : {
-        name: string,
-        folders: IFolder[]
-    }
+    folders : IFolder[]
 }
-interface IFolder {
-    name_folder: string,
+export interface IFolder {
+    name: string,
     id: string,
-    child_folder: IFolder[] | never
+    folders: IFolder[] | never
 }
-export default function RepoTree({data}: {data: IData}){
-
+export default function RepoTree({data, path, index}: {data: IFolder, path: string[], index: number}){
+    const currentPath = path.length > index ? path[index] :path[path.length-1]
+    console.log(currentPath)
     return (
         <ul>
-            <span>{data.repository.name}</span>
-            {RenderAllTreeItems({data: data.repository.folders})}
+            <span>{data.name}</span>
+            <input type="radio" value={data.id} name="3213"></input>
+            {RenderAllTreeItems({data: data.folders, path: path, index: index+1})}
         </ul>)
 }
-function RenderAllTreeItems({data}: {data: IFolder[]}){
-    return data.map((x,index) => TreeItem({data:x}))
+function RenderAllTreeItems({data, path, index}: {data: IFolder[], path: string[], index: number}){
+    const currentPath = path.length > index ? path[index] : ""
+    console.log(currentPath)
+    return data.map((x,index) => <RepoTree index={index+1} path={path} key={x.id} data={x}></RepoTree>)
 }
-function TreeItem({data, className}: {data: IFolder, className?: string}){
-    function onCl(e: any) {
-        e.stopPropagation();
-        e.target.classList.toggle("activee")
-    }
-    function onCl2(e: any) {
-        console.log(e)
-    }
-    return (
-    <>
-        <li  onClick={onCl} className="pl-1.5 nested" id={data.id}>
-            <span onClick={onCl2}>{data.name_folder}</span>
-            {data.child_folder.length > 0 ? TreeItems(data.child_folder) : null}
-        </li>
-    </>)
+
+interface IWrapper {
+    path: string[],
+    folders: IFolder[]
 }
-function TreeItems(data : IFolder[]){
-    return data.map((data,index) => <TreeItem key={data.id} data={data}></TreeItem>)
+export function Wrapper ({folders, path}: IWrapper){
+    let index = 0;
+    const currentPath = path[index]
+
+    return RenderAllTreeItems({data: folders, path: path, index: index+1})
 }

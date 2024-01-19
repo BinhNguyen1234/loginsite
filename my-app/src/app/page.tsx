@@ -1,19 +1,19 @@
 'use client'
 import Image from 'next/image'
-import RepoTree from '../TreeFolder'
+import RepoTree, { Wrapper } from '../TreeFolder'
 import json from "../TreeFolder/sample.json"
 import { usePathname } from 'next/navigation'
 export default function Home() {
-  let pathName = usePathname()
-  console.log(123)
-  function GetPathName(e:any){
-    
-    console.log(pathName)
+  function getChecked(e: any){
+    console.log(e.target)
   }
   return (
     <main>
-      <div onClick={GetPathName}>Get Path Name</div>
-      <RepoTree data={json}></RepoTree>
+      <div onChange={getChecked as any}>
+        fff
+      <Wrapper folders={json.folders} path={json.path} ></Wrapper>
+      </div>
+      
     </main>
   )
 }
