@@ -13,6 +13,6 @@ async function submit(e: any) {
   e.preventDefault();
   console.log(e);
   let file = e.target[0].files[0];
-  let a = new Worker("/fff.js")
+  let a = new Worker("/worker/worker.js")
   a.postMessage(file)
 }

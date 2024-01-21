@@ -7,15 +7,7 @@ const nextConfig = {
       ...config,
       entry: () => {
         let entries = config.entry().then((entry) => {
-          let c = Object.assign({}, entry, {
-            "woker": {
-              import: "./src/app/worker/fff.js",
-              filename: "fasfasf.js",
-              publicPath: path.resolve(__dirname, ".next/static/chunks"),
-              layer:"rsc", 
-              dependOn : undefined
-            },
-          });
+          let c = Object.assign({}, entry);
           return c;
         });
         return entries;

@@ -1,5 +1,7 @@
 ﻿using FileSericeWorker.Service;
 using FileWorkerService.Worker;
+using Quartz;
+using Quartz.AspNetCore;
 
 namespace FileSericeWorker
 {
@@ -32,8 +34,14 @@ namespace FileSericeWorker
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddHostedService<Worker1>();
-            services.AddSingleton<LogService>();
+            services.AddHostedService<BackgroundQueueHostedService>();
+            services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+            services.AddQuartz();
+            services.AddQuartzServer(options =>
+            {
+                // when shutting down we want jobs to complete gracefully
+                options.WaitForJobsToComplete = true;
+            });
         }
     }
 }

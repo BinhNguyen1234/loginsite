@@ -6,3 +6,4 @@ onmessage = (e)=>{
 
     console.log(e)
 }
+export default a

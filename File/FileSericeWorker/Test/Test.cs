@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using Quartz;
+using System.Collections.Concurrent;
 
 namespace FileSericeWorker.Test
 {
@@ -11,5 +12,12 @@ namespace FileSericeWorker.Test
         public void Enqueue(string taskData) =>  _tasks.Add(taskData) ;
 
         public string Dequeue(CancellationToken token) => _tasks.Take(token);
+    }
+    public class HelloJob : IJob
+    {
+        public async Task Execute(IJobExecutionContext context)
+        {
+            await Console.Out.WriteLineAsync("Greetings from HelloJob!");
+        }
     }
 }
