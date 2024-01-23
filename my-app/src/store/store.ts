@@ -8,7 +8,8 @@ export const makeStore = (token:any) => {
     reducer: {
       token: tok.reducer,
       tok2: a.reducer
-    }
+    },
+    devTools: true
   })
 }
 

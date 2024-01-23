@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createReducer, createSlice } from "@reduxjs/toolkit"
 export default function Token (token : string){
     console.log(token)
     return createSlice({
@@ -14,7 +14,6 @@ export default function Token (token : string){
         },
       })
 }
-
 let a = createSlice({
     name: 'token',
     initialState: {
