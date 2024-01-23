@@ -7,7 +7,10 @@ export default function Token (token : string){
             accessToken: token
         },
         reducers: {
-
+            fff: (crState, action)=>{
+                console.log(action)
+                return {accessToken: action.payload}
+            }
         },
       })
 }
@@ -19,6 +22,11 @@ let a = createSlice({
             accessToken:"asdasdasdasd"
         }
     },
-    reducers: {},
+    reducers: {
+        test: (cr, action) =>{
+            return {...cr}
+        }
+    },
   })
-  export { a}
+  let test = a.actions.test
+  export { a,test}

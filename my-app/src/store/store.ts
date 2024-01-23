@@ -4,7 +4,6 @@ import Token from './counter'
 export const makeStore = (token:any) => {
   const tok = Token(token)
   const c = a
-  debugger
   return configureStore({
     reducer: {
       token: tok.reducer,

@@ -1,9 +1,10 @@
 'use client'
-import { useAppSelector } from "@/store/hook";
-
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import {test} from '@/store/counter'
+import { useEffect } from "react";
 export default function FormUpload() {
-  const accessToken = useAppSelector(state => state)
-  console.log(accessToken)
+  const disPatch = useAppDispatch();
+  useEffect(()=>{disPatch({type:"token/fff", payload: "765756767567"})},[])
   return (
     <>
       <form onSubmit={submit}>
