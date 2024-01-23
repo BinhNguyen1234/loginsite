@@ -1,4 +1,9 @@
+'use client'
+import { useAppSelector } from "@/store/hook";
+
 export default function FormUpload() {
+  const accessToken = useAppSelector(state => state)
+  console.log(accessToken)
   return (
     <>
       <form onSubmit={submit}>

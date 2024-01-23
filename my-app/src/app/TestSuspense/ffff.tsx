@@ -3,7 +3,6 @@ import useGetData from "./index";
 
 function PostsComponent() {
   const data = useGetData();
-
   return (
     <div>
       {data && data}

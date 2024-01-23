@@ -13,6 +13,7 @@ const promiseWrapper = (promise: any) => {
       status = "error";
       result = error;
     });
+
   return () => {
     switch (status) {
       case "pending":
@@ -32,10 +33,7 @@ function useGetData(url?: any) {
 
   useEffect(() => {
     const getData = async () => {
-        let a = 5;
-        console.log(a)
-      const promise = new Promise((rs,rj)=>{ setTimeout(()=>{rs({data:"5555555"})},5000)}).then((response: any) =>{ a = response.data;return response.data});
-      console.log(a)
+      const promise = new Promise((rs,rj)=>{ setTimeout(()=>{rs({data:"5555555"})},5000)}).then((response: any) =>{ return response.data});
       setResource(promiseWrapper(promise));
     };
 

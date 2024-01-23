@@ -31,9 +31,6 @@ export default function Home() {
       <Wrapper folders={json.folders} path={json.path} ></Wrapper>
       </div> */}
       <FormUpload></FormUpload>
-      <Suspense fallback={<div>loaàasfasfasfasfding</div>}>
-        <PostsComponent></PostsComponent>
-      </Suspense>
 
       <Image src="/image-21.png" alt="me" width="64" height="64"></Image>
     </main>
