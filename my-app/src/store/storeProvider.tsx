@@ -4,10 +4,11 @@ import { Provider } from 'react-redux'
 import { makeStore, AppStore } from './store'
 
 export default function StoreProvider({
-  children, token
+  children
 }: {
-  children: React.ReactNode, token: string
+  children: React.ReactNode
 }) {
+  let  token="ff"
   const storeRef = useRef<AppStore>()
   if (!storeRef.current) {
     // Create the store instance the first time this renders
