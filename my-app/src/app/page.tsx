@@ -1,4 +1,4 @@
-
+'use client'
 import Image from "next/image";
 import RepoTree, { Wrapper } from "../TreeFolder";
 import json from "../TreeFolder/sample.json";
@@ -8,17 +8,15 @@ import Script from "next/script";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Test from "./TestSuspense/test2/component";
 import { headers } from 'next/headers'
-export default async function Home() {
-  console.log("second")
-
-  await fetch("http://localhost:5252/api/user/authozire",{headers: headers()})
-  const data = new Promise((rs, rj) => {
-    setTimeout(() => {
-      rs("5");
-    }, 10000);
-  });
-  throw new Error()
+import customFetch from "./test/custoomFetch";
+export default function Home() {
   
+  const [state, setState] = useState(0)
+  customFetch("http://localhost:5252/api/user/authozire",{method: "get"}).then(rs => {
+    setState(rs)
+  })
+  console.log(state)
+
   // const [abc, set] = useState({status: "peding",data: ""});
   // useEffect(() => {
   //   const data = new Promise((rs, rj) => {
