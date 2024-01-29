@@ -34,9 +34,9 @@ export default function Home() {
         fff
       <Wrapper folders={json.folders} path={json.path} ></Wrapper>
       </div> */}
-      {/* <<FormUpload></FormUpload>
-      <Test></Test>> */}
-      <div>12312</div>
+      <FormUpload></FormUpload>
+      <Test></Test>
+      {/* <div>12312</div> */}
     </main>
   );
 }

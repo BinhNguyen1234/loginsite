@@ -2,6 +2,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {test} from '@/store/counter'
 import { useEffect } from "react";
+let a = new Worker("/worker/worker.js")
 export default function FormUpload() {
   const disPatch = useAppDispatch();
   useEffect(()=>{disPatch({type:"token/fff", payload: "765756767567"})},[])
@@ -19,6 +20,7 @@ async function submit(e: any) {
   e.preventDefault();
   console.log(e);
   let file = e.target[0].files[0];
-  let a = new Worker("/worker/worker.js")
+
   a.postMessage(file)
 }
+

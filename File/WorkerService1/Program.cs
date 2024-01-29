@@ -1,7 +1,7 @@
-using WorkerService1;
+//using WorkerService1;
 
-var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<Worker>();
+//var builder = Host.CreateApplicationBuilder(args);
+//builder.Services.AddHostedService<Worker>();
 
-var host = builder.Build();
-host.Run();
+//var host = builder.Build();
+//host.Run();

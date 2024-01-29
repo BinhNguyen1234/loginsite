@@ -1,4 +1,6 @@
-﻿using FileSericeWorker.Service;
+﻿using FileSericeWorker.RabitMQ;
+using FileSericeWorker.Service;
+using FileSericeWorker.Service.StorageService;
 using FileWorkerService.Worker;
 using Quartz;
 using Quartz.AspNetCore;
@@ -25,23 +27,20 @@ namespace FileSericeWorker
             app.UseAuthorization();
 
             app.MapControllers();
-
+            
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddScoped<IRabitMqProducer, RabitMqProducer>();
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddHostedService<BackgroundQueueHostedService>();
-            services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-            services.AddQuartz();
-            services.AddQuartzServer(options =>
-            {
-                // when shutting down we want jobs to complete gracefully
-                options.WaitForJobsToComplete = true;
-            });
+            services.AddHostedService<ConsumeRabiitMQService>();
+            services.AddFileStorageService("ReadMe.txt");
+            //services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
         }
     }
 }

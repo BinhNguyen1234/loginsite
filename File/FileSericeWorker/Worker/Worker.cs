@@ -1,5 +1,13 @@
 using FileSericeWorker.Test;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
 using System.Threading;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.Json.Nodes;
+using Newtonsoft.Json;
+using FileSericeWorker.Controllers;
+using Microsoft.Extensions.Logging;
 
 namespace FileWorkerService.Worker
 {
@@ -84,6 +92,50 @@ namespace FileWorkerService.Worker
         public Task StopAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+    }
+    public class ConsumeRabiitMQService : BackgroundService
+    {
+        private readonly ILogger<ConsumeRabiitMQService> _logger;
+        private IConnection _connection;
+        private IModel _channel;
+        private IServiceProvider _serviceProvider;
+
+        public ConsumeRabiitMQService(ILogger<ConsumeRabiitMQService> logger, IServiceProvider serviceProvider)
+        {
+            _logger = logger;
+            Console.WriteLine("ffff");
+            Configure();
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            stoppingToken.ThrowIfCancellationRequested();
+            var consumer = new EventingBasicConsumer(_channel);
+            consumer.Received += (_, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var content = Encoding.UTF8.GetString(body);
+                var converter = JsonConvert.DeserializeObject<Test>(content);
+                _logger.LogInformation(converter.age.ToString());
+                _logger.LogInformation(content);
+                Console.WriteLine(content);
+            };
+            consumer.Registered += (_, EventArgs) =>
+            {
+                _logger.LogInformation("Consumer was register");
+                Console.WriteLine("Consumer was register");
+
+            };
+            _channel.BasicConsume("product", false, consumer);
+            await Task.CompletedTask;
+        }
+        private void Configure()
+        {
+            var factory = new ConnectionFactory { HostName = "localhost" };
+            this._connection = factory.CreateConnection();
+            _channel = _connection.CreateModel();
+            _channel.QueueDeclare("product", exclusive: false);
         }
     }
 }
