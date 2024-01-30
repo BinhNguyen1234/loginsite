@@ -2,8 +2,7 @@ onmessage = async (data) => {
   const chunkSize = 1024 * 1024; // size of each chunk (1MB)
   let start = 0;
   const file = data.data;
-  console.log(file);
-  await fetchByBatch(chunkSize, 3, 3000, data.data, 3);
+  await fetchByBatch(chunkSize, 3, 3000, data.data, 100);
   // while (start < file.size) {
   //   let a = new Promise((rs,rj)=>{
   //     setTimeout(()=>{rs(file.slice(start, start + chunkSize))},3000)
@@ -23,33 +22,36 @@ onmessage = async (data) => {
   //   start += chunkSize;
   // }
 };
-async function fetchByBatch(chunkSize, batch, timeOut, file, retry = 1) {
+async function fetchByBatch(chunkSize = 1024*1024, batch = 3, timeOut = 3000, file, retry = 1) {
   let start = 0;
-  let reject = [];
-  while ((start < file.size) && (retry > 0)) {
+  retry *= batch;
+  let timeoutWhenFaild = timeOut * 10
+  let timeOutWhenSuccess = timeOut
+  while (start < file.size && retry > 0) {
     let request = [];
     for (let i = 0; i < batch; i++) {
-      // request.push(new FormData().append("file",file.slice(start, start + chunkSize)))
-      request.push(fetch("https://jsonplaceholder.typicode.com/posts"));
+      request.push(
+        fetch("https://jsonplaceholder.typicode.com/posts").catch((e) => {
+          console.log(e)
+          return e;
+        })
+      );
       start += chunkSize;
     }
-    let current = start;
     let FecthBacth = new Promise((resolve, reject) => {
       setTimeout(() => {
-        Promise.all(request)
-          .then((rs) => {
-            rs.forEach((data) => {
-              if (!data.ok) {
-                throw new Error("Error with data from server");
-              }
-            })
-            resolve();
-          })
-          .catch((e) => {
-            console.log(e,"fffff")
-            start -= current;
-            retry -= 1;
+        Promise.all(request).then((rs) => {
+          rs.forEach((data) => {
+            if (!data.ok) {
+              start -= chunkSize;
+              retry -=1;
+              timeOut = timeoutWhenFaild
+            } else {
+              timeOut = timeOutWhenSuccess
+            }
           });
+          resolve();
+        });
       }, timeOut);
     });
     await FecthBacth;
