@@ -1,4 +1,5 @@
 onmessage = async (data) => {
+  console.log("fffffffasfasfas")
   const chunkSize = 1024 * 1024; // size of each chunk (1MB)
   let start = 0;
   const file = data.data;

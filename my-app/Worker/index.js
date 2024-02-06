@@ -1,1 +1,1 @@
-import a from "./fff copy"
+import a from "./ttt"

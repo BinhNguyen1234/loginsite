@@ -2,7 +2,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {test} from '@/store/counter'
 import { useEffect } from "react";
-let a = new Worker("/worker/worker.js")
+import a from "./wok"
 export default function FormUpload() {
   const disPatch = useAppDispatch();
   useEffect(()=>{disPatch({type:"token/fff", payload: "765756767567"})},[])

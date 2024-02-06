@@ -1,0 +1,8 @@
+FROM node:20.11
+COPY . /test
+WORKDIR /test
+RUN npm install
+RUN npm run worker
+RUN next build
+CMD ["install","build", "start"]
+EXPOSE 3000
