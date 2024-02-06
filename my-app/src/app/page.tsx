@@ -12,10 +12,9 @@ import customFetch from "./test/custoomFetch";
 export default function Home() {
   
   const [state, setState] = useState(0)
-  customFetch("http://localhost:5252/api/user/authozire",{method: "get"}).then(rs => {
-    setState(rs)
-  })
-  console.log(state)
+  // customFetch("http://localhost:5252/api/user/authozire",{method: "get"}).then(rs => {
+  //   setState(rs)
+  // })
 
   // const [abc, set] = useState({status: "peding",data: ""});
   // useEffect(() => {

@@ -9,7 +9,6 @@ export interface IFolder {
 }
 export default function RepoTree({data, path, index}: {data: IFolder, path: string[], index: number}){
     const currentPath = path.length > index ? path[index] :path[path.length-1]
-    console.log(currentPath)
     return (
         <ul>
             <span>{data.name}</span>

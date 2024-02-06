@@ -1,6 +1,5 @@
 import { createReducer, createSlice } from "@reduxjs/toolkit"
-export default function Token (token : string){
-    console.log(token)
+export default function Token (token : string){let a = new Worker("/worker/worker.js")
     return createSlice({
         name: 'token',
         initialState: {
