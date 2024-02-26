@@ -8,92 +8,12 @@ using System.Text.Json.Nodes;
 using Newtonsoft.Json;
 using FileSericeWorker.Controllers;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
 
 namespace FileWorkerService.Worker
 {
-    //public class TaskProcessor : BackgroundService
-    //{
-    //    private readonly TasksToRun _tasks;
-
-    //    public TaskProcessor(TasksToRun tasks) => _tasks = tasks;
-
-    //    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    //    {
-    //        await Task.Yield(); // This will prevent background service from blocking start up of application
-
-    //        while (stoppingToken.IsCancellationRequested == false)
-    //        {
-    //            try
-    //            {
-    //                var taskToRun = _tasks.Dequeue(_tokenSource.Token);
-
-
-    //                await ExecuteTask(taskToRun);
-    //            }
-    //            catch (OperationCanceledException)
-    //            {
-    //                // execution cancelled
-    //            }
-    //            catch (Exception e)
-    //            {
-    //                // Catch and log all exceptions,
-    //                // So we can continue processing other tasks
-    //            }
-    //        }
-    //    }
-    //}
-
-    public class Worker1 : BackgroundService
-    {
-        private readonly ILogger<Worker1> _logger;
-        private readonly IServiceProvider _serviceProvider;
-        public Worker1(ILogger<Worker1> logger, IServiceProvider services)
-        {
-            _logger = logger;
-            _serviceProvider = services;
-        }
-
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                if (_logger.IsEnabled(LogLevel.Information))
-                {
-                    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                }
-                await Task.Delay(1000, stoppingToken);
-            }
-        }
-        private void DoSt()
-        {
-            Console.WriteLine("ffff");
-        }
-    }
-    public class Worker2 : IHostedService
-    {
-        private readonly ILogger<Worker2> _logger;
-
-        public Worker2(ILogger<Worker2> logger)
-        {
-            _logger = logger;
-        }
-        public async Task StartAsync(CancellationToken cancellationToken)
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                if (_logger.IsEnabled(LogLevel.Information))
-                {
-                    _logger.LogInformation("Worker2 running at: {time}", DateTimeOffset.Now);
-                }
-                await Task.Delay(1000, cancellationToken);
-            }
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-    }
     public class ConsumeRabiitMQService : BackgroundService
     {
         private readonly ILogger<ConsumeRabiitMQService> _logger;
@@ -104,7 +24,6 @@ namespace FileWorkerService.Worker
         public ConsumeRabiitMQService(ILogger<ConsumeRabiitMQService> logger, IServiceProvider serviceProvider)
         {
             _logger = logger;
-            Console.WriteLine("ffff");
             Configure();
         }
 
@@ -117,25 +36,50 @@ namespace FileWorkerService.Worker
                 var body = ea.Body.ToArray();
                 var content = Encoding.UTF8.GetString(body);
                 var converter = JsonConvert.DeserializeObject<Test>(content);
-                _logger.LogInformation(converter.age.ToString());
                 _logger.LogInformation(content);
                 Console.WriteLine(content);
+                //System.IO.File.Create($"D://file//{converter?.name}");
+                
+
+                    int SIZEBUFFER = 5;
+                    using (var stream = System.IO.File.Create($"D://file//{converter?.name}")) { }
+                    
+                    bool endread = false;
+                    for (var i = 0; i <= converter.numberOfPart; i++)
+                    {
+                        
+                        using (var stream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.Append, access: FileAccess.Write, share: FileShare.ReadWrite))
+                        using (var streamRead = new FileStream(path: $"D://file//part-{i}.{converter?.name}", mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+                        do
+                            {
+                            byte[] buffer = new byte[SIZEBUFFER];
+                            int numberRead = streamRead.Read(buffer, 0, SIZEBUFFER);
+                                if (numberRead == 0) endread = true;
+                                else
+                                {
+                                    stream.Write(buffer, 0, numberRead);
+                                }
+
+                            } while (!endread);
+                        
+                    }
+                
             };
             consumer.Registered += (_, EventArgs) =>
             {
                 _logger.LogInformation("Consumer was register");
                 Console.WriteLine("Consumer was register");
-
             };
             _channel.BasicConsume("product", false, consumer);
             await Task.CompletedTask;
         }
         private void Configure()
         {
-            var factory = new ConnectionFactory { HostName = "localhost" };
+            var factory = new ConnectionFactory { HostName = "localhost", Port = 3007 };
             this._connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.QueueDeclare("product", exclusive: false);
         }
+
     }
 }

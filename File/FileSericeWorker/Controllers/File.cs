@@ -37,6 +37,38 @@ namespace FileSericeWorker.Controllers
             _rabitMQProducer.SendMessage(test);
             return Ok("ff");
         }
+        [HttpPost]
+        public IActionResult MergeFile([FromBody] Test test)
+        {
+            _service.Test();
+            _rabitMQProducer.SendMessage(test);
+            return Ok("ff");
+        }
+        [HttpPost]
+        public async Task<IActionResult> uploadFile()
+        {
+            //_service.Test();
+            //_rabitMQProducer.SendMessage(test);
+            //return Ok("ff");
+            var le = HttpContext.Request.Form.Files[0];
+            using (var des = System.IO.File.Create($"D://file//{le.FileName}"))
+            using (Stream file = HttpContext.Request.Form.Files[0].OpenReadStream())
+            {
+                byte[] buffer = new byte[1024 * 1024 * 10];
+                int bytesRead;
+
+                while ((bytesRead = await file.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                {
+
+                    des.Write(buffer, 0, bytesRead);
+                }
+                await file.DisposeAsync();
+
+                await des.DisposeAsync();
+            }
+
+            return Ok();
+        }
         //[HttpGet]
         //public IActionResult runservice()
         //{
@@ -69,6 +101,6 @@ namespace FileSericeWorker.Controllers
     public class Test
     {
         public string name { get; set; }
-        public int age { get; set; }
+        public int numberOfPart { get; set; }
     }
 }

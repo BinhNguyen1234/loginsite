@@ -9,6 +9,7 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import Test from "./TestSuspense/test2/component";
 import { headers } from 'next/headers'
 import customFetch from "./test/custoomFetch";
+import Mod from "./test";
 export default function Home() {
   
   const [state, setState] = useState(0)
@@ -28,15 +29,17 @@ export default function Home() {
   //   });
   // }, []);
   return (
+    <>
     <main>
       {/* <div onChange={getChecked as any}>
         fff
       <Wrapper folders={json.folders} path={json.path} ></Wrapper>
       </div> */}
-      <FormUpload></FormUpload>
-      <Test></Test>
+       <FormUpload></FormUpload>
+      {/* <Test></Test>  */}
       {/* <div>12312</div> */}
-    </main>
+    </main></>
+
   );
 }
 
