@@ -89,6 +89,7 @@ namespace FileWorkerService.Worker
                             // while the read method returns bytes
                             // keep writing them to the output stream
                             while ((bytesRead =
+
                                     readStream.Read(buffer, 0, 1024)) > 0)
                             {
                                 writeStream.Write(buffer, 0, bytesRead);
