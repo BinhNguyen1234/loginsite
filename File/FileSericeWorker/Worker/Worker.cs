@@ -39,31 +39,91 @@ namespace FileWorkerService.Worker
                 _logger.LogInformation(content);
                 Console.WriteLine(content);
                 //System.IO.File.Create($"D://file//{converter?.name}");
-                
 
-                    int SIZEBUFFER = 5;
-                    using (var stream = System.IO.File.Create($"D://file//{converter?.name}")) { }
-                    
-                    bool endread = false;
+
+                //using (var ddd = System.IO.File.Create($"D://file//{converter?.name}")) { }
+                //using (var stream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.Append, access: FileAccess.Write, share: FileShare.ReadWrite))
+                //using (StreamWriter sw = new StreamWriter(stream))
+                //{
+                //for (var i = 0; i <= converter.numberOfPart; i++)
+                //{
+                //    using (var streamRead = System.IO.File.OpenRead(path: $"D://file//part-{i}.{converter?.name}"))
+                //    {
+                //        streamRead.CopyTo(stream);
+                //    }
+                //}
+
+
+
+                //    using (var ddd = System.IO.File.Create($"D://file//{converter?.name}")) { }
+
+
+                //    using (var stream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.Append, access: FileAccess.Write, share: FileShare.ReadWrite))
+                //    {
+                //    for (var i = 0; i <= converter.numberOfPart; i++)
+                //    {
+                //        using (var streamRead = new FileStream(path: $"D://file//part-{i}.{converter?.name}", mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+                //        {
+                //            streamRead.CopyTo(stream);
+                //        }
+                //    }
+
+
+                //}
+
+
+
+                using (FileStream writeStream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.OpenOrCreate, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+                {
                     for (var i = 0; i <= converter.numberOfPart; i++)
                     {
-                        
-                        using (var stream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.Append, access: FileAccess.Write, share: FileShare.ReadWrite))
-                        using (var streamRead = new FileStream(path: $"D://file//part-{i}.{converter?.name}", mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
-                        do
-                            {
-                            byte[] buffer = new byte[SIZEBUFFER];
-                            int numberRead = streamRead.Read(buffer, 0, SIZEBUFFER);
-                                if (numberRead == 0) endread = true;
-                                else
-                                {
-                                    stream.Write(buffer, 0, numberRead);
-                                }
+                        using (FileStream readStream = new FileStream(path: $"D://file//part-{i}.{converter?.name}", mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+                        {
+                            BinaryReader reader = new BinaryReader(readStream);
+                            BinaryWriter writer = new BinaryWriter(writeStream);
 
-                            } while (!endread);
-                        
+                            // create a buffer to hold the bytes 
+                            byte[] buffer = new Byte[1024];
+                            int bytesRead;
+
+                            // while the read method returns bytes
+                            // keep writing them to the output stream
+                            while ((bytesRead =
+                                    readStream.Read(buffer, 0, 1024)) > 0)
+                            {
+                                writeStream.Write(buffer, 0, bytesRead);
+                            }
+                        }
                     }
-                
+                }
+
+
+                //using (FileStream writeStream = System.IO.File.OpenWrite($"D://file//{converter?.name}"))
+                //{
+                //    for (var i = 0; i <= converter.numberOfPart; i++)
+                //    {
+                //        using (FileStream readStream = System.IO.File.OpenRead($"D://file//part-{i}.{converter?.name}"))
+                //        {
+                //            BinaryReader reader = new BinaryReader(readStream);
+                //            BinaryWriter writer = new BinaryWriter(writeStream);
+
+                //            // create a buffer to hold the bytes 
+                //            byte[] buffer = new Byte[1024];
+                //            int bytesRead;
+
+                //            // while the read method returns bytes
+                //            // keep writing them to the output stream
+                //            while ((bytesRead =
+                //                    readStream.Read(buffer, 0, 1024)) > 0)
+                //            {
+                //                writeStream.Write(buffer, 0, bytesRead);
+                //            }
+                //        }
+                //    }
+                //}
+
+
+
             };
             consumer.Registered += (_, EventArgs) =>
             {
