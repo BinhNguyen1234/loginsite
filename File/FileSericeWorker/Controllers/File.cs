@@ -7,6 +7,9 @@ using Quartz;
 using System.Net.NetworkInformation;
 using System.IO;
 using FileSericeWorker.Service.StorageService;
+using static System.Net.WebRequestMethods;
+using Microsoft.Net.Http.Headers;
+using System.Reflection.Metadata;
 namespace FileSericeWorker.Controllers
 {
     [Route("[controller]/[action]")]
@@ -66,31 +69,25 @@ namespace FileSericeWorker.Controllers
 
                 await des.DisposeAsync();
             }
-
             return Ok();
         }
-        //[HttpGet]
-        //public IActionResult runservice()
-        //{
-        //    _backgroundTaskQueue.EnqueueTask(async (serviceScopeFactory, cancellationToken) =>
-        //    {
-        //        // Get services
-        //        using var scope = serviceScopeFactory.CreateScope();
-        //        var logger = scope.ServiceProvider.GetRequiredService<ILogger<File>>();
+        [HttpGet]
+        public IActionResult runservice()
+        {
+            return Ok("ff");
+        }
 
-        //        try
-        //        {
-        //            // Do something expensive
-        //             Console.WriteLine(23123);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            logger.LogError(ex, "Could not do something expensive");
-        //        }
-        //    });
-        //    return Ok("ff");
-        //}
-
+        [HttpGet]
+        public IActionResult downloadFile()
+        {
+            //string mimeType = "application/unknown";
+            //Response.ContentType = mimeType;
+            ////_service.Test();
+            ////_rabitMQProducer.SendMessage(test);
+            ////return Ok("ff");
+            return File(System.IO.File.OpenRead($"D://file//file_example_PNG_3MB.png"), System.Net.Mime.MediaTypeNames.Application.Octet, "ffff.png");
+            //return Ok("");
+        }
         //[HttpGet]
         //public IActionResult stopservice()
         //{
