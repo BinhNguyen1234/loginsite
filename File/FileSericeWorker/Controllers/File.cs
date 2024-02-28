@@ -10,6 +10,8 @@ using FileSericeWorker.Service.StorageService;
 using static System.Net.WebRequestMethods;
 using Microsoft.Net.Http.Headers;
 using System.Reflection.Metadata;
+using Quartz.Util;
+using System.Security.Cryptography;
 namespace FileSericeWorker.Controllers
 {
     [Route("[controller]/[action]")]
@@ -85,8 +87,80 @@ namespace FileSericeWorker.Controllers
             ////_service.Test();
             ////_rabitMQProducer.SendMessage(test);
             ////return Ok("ff");
-            return File(System.IO.File.OpenRead($"D://file//file_example_PNG_3MB.png"), System.Net.Mime.MediaTypeNames.Application.Octet, "ffff.png");
-            //return Ok("");
+            ///
+
+
+
+            using (FileStream fsInput = new FileStream($"D://file//file_example_PNG_3MB.png", FileMode.Open))
+            {
+            using (FileStream fsOutput = new FileStream($"D://file//file_example_PNG_3MB-en.png", FileMode.Create))
+                {
+                    using (AesManaged aes = new AesManaged())
+                    {
+                        aes.Key = [91,
+                            38,
+                            236,
+                            114,
+                            205,
+                            233,
+                            94,
+                            59,
+                            70,
+                            36,
+                            63,
+                            75,
+                            106,
+                            69,
+                            73,
+                            141,
+                            10,
+                            169,
+                            85,
+                            146,
+                            127,
+                            32,
+                            242,
+                            200,
+                            84,
+                            142,
+                            178,
+                            99,
+                            42,
+                            1,
+                            58,
+                            48,
+                        ];
+                        aes.IV = [216,
+                            174,
+                            136,
+                            238,
+                            143,
+                            98,
+                            251,
+                            49,
+                            141,
+                            246,
+                            74,
+                            49,
+                            161,
+                            169,
+                            186,
+                            137,
+                        ];
+
+                        // Perform decryption
+                        ICryptoTransform decryptor = aes.CreateDecryptor();
+                        using (CryptoStream cs = new CryptoStream(fsOutput, decryptor, CryptoStreamMode.Write))
+                        {
+                            fsInput.CopyTo(cs);
+                        }
+                    }
+                }
+            }
+
+
+            //return File(System.IO.File.OpenRead($"D://file//file_example_PNG_3MB.png"), System.Net.Mime.MediaTypeNames.Application.Octet, "ffff.png");
+            return Ok("");
         }
         //[HttpGet]
         //public IActionResult stopservice()

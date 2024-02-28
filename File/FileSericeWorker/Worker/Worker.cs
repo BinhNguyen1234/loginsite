@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace FileWorkerService.Worker
 {
@@ -55,48 +56,122 @@ namespace FileWorkerService.Worker
 
 
 
-                //    using (var ddd = System.IO.File.Create($"D://file//{converter?.name}")) { }
+                using (var ddd = System.IO.File.Create($"D://file//{converter?.name}")) { }
 
 
-                //    using (var stream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.Append, access: FileAccess.Write, share: FileShare.ReadWrite))
-                //    {
-                //    for (var i = 0; i <= converter.numberOfPart; i++)
-                //    {
-                //        using (var streamRead = new FileStream(path: $"D://file//part-{i}.{converter?.name}", mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
-                //        {
-                //            streamRead.CopyTo(stream);
-                //        }
-                //    }
-
-
-                //}
-
-
-
-                using (FileStream writeStream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.OpenOrCreate, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+                using (var stream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.Append, access: FileAccess.Write, share: FileShare.ReadWrite))
                 {
                     for (var i = 0; i <= converter.numberOfPart; i++)
                     {
-                        using (FileStream readStream = new FileStream(path: $"D://file//part-{i}.{converter?.name}", mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+                        using (var streamRead = new FileStream(path: $"D://file//part-{i}.{converter?.name}", mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
                         {
-                            BinaryReader reader = new BinaryReader(readStream);
-                            BinaryWriter writer = new BinaryWriter(writeStream);
-
-                            // create a buffer to hold the bytes 
-                            byte[] buffer = new Byte[1024];
-                            int bytesRead;
-
-                            // while the read method returns bytes
-                            // keep writing them to the output stream
-                            while ((bytesRead =
-
-                                    readStream.Read(buffer, 0, 1024)) > 0)
+                            //streamRead.CopyTo(stream);
+                            using (AesManaged aes = new AesManaged())
                             {
-                                writeStream.Write(buffer, 0, bytesRead);
+                                aes.Key = [91,
+38,
+236,
+114,
+205,
+233,
+94,
+59,
+70,
+36,
+63,
+75,
+106,
+69,
+73,
+141,
+10,
+169,
+85,
+146,
+127,
+32,
+242,
+200,
+84,
+142,
+178,
+99,
+42,
+1,
+58,
+48,
+];
+                                aes.IV = [216,
+174,
+136,
+238,
+143,
+98,
+251,
+49,
+141,
+246,
+74,
+49,
+161,
+169,
+186,
+137,
+];
+                                
+                                // Perform encryption
+                                ICryptoTransform encryptor = aes.CreateEncryptor();
+                                using (CryptoStream cs = new CryptoStream(stream, encryptor, CryptoStreamMode.Write))
+                                {
+                                    streamRead.CopyTo(cs);
+                                }
                             }
                         }
                     }
+
+
                 }
+
+
+
+                //using (FileStream writeStream = new FileStream(path: $"D://file//{converter?.name}", mode: FileMode.OpenOrCreate, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+                //{
+                //    for (var i = 0; i <= converter.numberOfPart; i++)
+                //    {
+                //        using (FileStream readStream = new FileStream(path: $"D://file//part-{i}.{converter?.name}", mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+                //        {
+                //            BinaryReader reader = new BinaryReader(readStream);
+                //            BinaryWriter writer = new BinaryWriter(writeStream);
+
+
+                //            using (AesManaged aes = new AesManaged())
+                //            {
+                //                aes.Key = [0, 0, 0, 25];
+                //                aes.IV = [0, 0, 0, 26];
+                //                // Perform encryption
+                //                ICryptoTransform encryptor = aes.CreateEncryptor();
+                //                using (CryptoStream cs = new CryptoStream(writeStream, encryptor, CryptoStreamMode.Write))
+                //                {
+                //                    readStream.CopyTo(cs);
+                //                }
+                //            }
+
+
+                            //// create a buffer to hold the bytes 
+                            //byte[] buffer = new Byte[1024];
+                            //int bytesRead;
+
+                            //// while the read method returns bytes
+                            //// keep writing them to the output stream
+                            //while ((bytesRead =
+
+                            //        readStream.Read(buffer, 0, 1024)) > 0)
+                            //{
+                            //    writeStream.Write(buffer, 0, bytesRead);
+                            //}
+                        //}
+                    //}
+                //}
 
 
                 //using (FileStream writeStream = System.IO.File.OpenWrite($"D://file//{converter?.name}"))
