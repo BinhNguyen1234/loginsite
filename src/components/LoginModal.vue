@@ -34,12 +34,11 @@
             </svg>
         <div  id="text-wrap">
             <div class="text text1" >
-                Welcome to our blog!
+                Welcome to my blog!
             </div>
             <div class="text text2">
                 Let’s begin the adventure
-
-            </div>
+              </div>
         </div>
         <form  id="login">
             <label for="emailInput" style="display: block; color:#00cfc8; font-size: 16px; font-weight: 600;" >Enter your email</label>
@@ -50,7 +49,7 @@
             <div for="passInput"><span for="passInput">→</span><input type="password" autofocus="true" id="passInput" class="input-group" >
                 
             </div>
-            <button type="submit" class="btn btn-outline-secondary" >Continue</button>
+            <button type="submit" class="btn btn-outline-secondary" >Login</button>
         </form>
 </div>
 </template>
@@ -125,4 +124,7 @@ input
     padding: 0
     &:focus-visible
         outline: none
+button
+  &:hover
+    box-shadow: 0px 0px 7px 5px white
 </style>
