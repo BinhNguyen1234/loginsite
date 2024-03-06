@@ -76,10 +76,11 @@ namespace FileSericeWorker.Controllers
         [HttpGet]
         public IActionResult runservice()
         {
+            var c = HttpContext;
             return Ok("ff");
-        }
+        }  
 
-        [HttpGet]
+        [HttpGet]    
         public IActionResult downloadFile()
         {
             //string mimeType = "application/unknown";

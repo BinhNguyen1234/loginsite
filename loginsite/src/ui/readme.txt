@@ -1,0 +1,1 @@
+this folder store shared component, that you use them as global

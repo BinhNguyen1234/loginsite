@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "target": "ES2020",
+        "useDefineForClassFields": true,
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "module": "ES2020",
+        "skipLibCheck": true,
+        "allowJs": false,
+        "jsx": "react-jsx",
+        "baseUrl": "./",
+        "paths": {
+            "@components/*": ["src/components/*"],
+            "@assets/*": ["src/assets/*"],
+            "@store/*": ["src/store/*"]
+        },
+        "moduleResolution": "Bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": ["src", "postcss.config.js"],
+    "references": [{ "path": "./tsconfig.node.json" }]
+
+}

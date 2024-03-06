@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  body {
+    margin: 0
+  }
+  @keyframes Scale {
+    50%{
+      opacity: 1;
+    }
+    80%{
+      opacity: 0;
+    }
+    100% {
+      transform: rotate(40deg) scale(600%);
+    }
+  } 
+.Main {
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+}
+.star {
+    box-shadow: 0px 0px 9px white;
+    background-color: white;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    position: absolute;
+}
+.Galaxy {
+    opacity: 0;
+    z-index: 2;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+}
+.Galaxy-frame0 {
+    animation: Scale 10s ease-in infinite;
+}
+.Galaxy-frame1 {
+    animation: Scale 8s ease-in 3s infinite;
+}
+.Galaxy-frame2 {
+    animation: Scale 8s ease-in 8s infinite;
+}
+.Galaxy-frame4 {
+    animation: Scale 10s ease-in 5s infinite;
+}
+.Fast.Galaxy-frame0 {
+    animation: Scale 1s ease-in infinite;
+}
+.Fast.Galaxy-frame1 {
+    animation: Scale 1s ease-in 0.5s infinite;
+}
+.Fast.Galaxy-frame2 {
+    animation: Scale 1s ease-in 1s infinite;
+}
+#text-wrap {
+    margin-bottom: 30px;
+}
+@keyframes blink-caret {
+    from,
+    to {
+        border-right: 1px solid transparent;
+    }
+    50% {
+        border-right: 1px solid white;
+    }
+}
+
+@keyframes texttype {
+    0% {
+        height: fit-content;
+    }
+    100% {
+        height: fit-content;
+        width: 100%;
+    }
+}
+@keyframes display {
+    100% {
+        width: 100%;
+        height: fit-content;
+        visibility: visible;
+    }
+}
+#text-box {
+    box-shadow: 0px 0px 20px -5px white;
+    background-color: #0c162d;
+    z-index: 30;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    color: white;
+    border: 0.25px solid white;
+    border-radius: 5px;
+    padding: 20px 40px;
+}
+
+.text {
+    color: #627597;
+    font-size: 20px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    width: 0%;
+    height: 0px;
+}
+.text1 {
+    animation:
+        texttype 2s steps(40, end) forwards,
+        blink-caret 0.3s step-end 10;
+}
+#login {
+    margin: 0px;
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+    animation: display 0s forwards 4.2s;
+}
+
+#login > span t {
+    text-align: justify;
+    color: #ea4aaa;
+    font-size: 26px;
+    margin-right: 10px;
+}
+input {
+    width: 100%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+    padding: 5px;
+}
+input:focus-visible {
+    outline: none;
+    border: 0.5px solid white;
+    border-radius: 5px;
+}
+
+button:hover {
+    box-shadow: 0px 0px 7px 5px white;
+}

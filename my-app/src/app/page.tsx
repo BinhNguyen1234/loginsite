@@ -1,18 +1,16 @@
-'use client'
-import Image from "next/image";
-import RepoTree, { Wrapper } from "../TreeFolder";
-import json from "../TreeFolder/sample.json";
-import { usePathname } from "next/navigation";
+
+import { cookies, headers } from 'next/headers'
 import FormUpload from "./FormUpload";
-import Script from "next/script";
-import { Suspense, useEffect, useMemo, useState } from "react";
-import Test from "./TestSuspense/test2/component";
-import { headers } from 'next/headers'
-import customFetch from "./test/custoomFetch";
-import Mod from "./test";
-export default function Home() {
-  
-  const [state, setState] = useState(0)
+import CLientSide from "./client";
+export default async function Home() {
+  console.log(headers().get('FFFFF'))
+  const data = {num: 6}
+  const a = await fetch('http://localhost:5214/file/runserviffce').then( x => {
+    if(!x.ok){
+      throw new Error()
+    }
+  })
+
   // customFetch("http://localhost:5252/api/user/authozire",{method: "get"}).then(rs => {
   //   setState(rs)
   // })
@@ -24,7 +22,7 @@ export default function Home() {
   //       rs("5");
   //     }, 10000);
   //   });
-  //   data.then((rs) => {
+  //   data.then((rs) => { 
   //     return set({status: 'success', data: rs as any});
   //   });
   // }, []);
@@ -36,12 +34,16 @@ export default function Home() {
       <Wrapper folders={json.folders} path={json.path} ></Wrapper>
       </div> */}
        <FormUpload></FormUpload>
+       <CLientSide Data={data}></CLientSide>
       {/* <Test></Test>  */}
       {/* <div>12312</div> */}
     </main></>
 
   );
 }
+export const dynamic = 'force-dynamic' 
+
+
 
 // const a = new Promise((rs, rj) => {
 //   setTimeout(() => {

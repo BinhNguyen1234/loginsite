@@ -1,0 +1,1 @@
+Any page is a view. example: /home is a view, so it will be store in this folder
